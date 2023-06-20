@@ -3,7 +3,7 @@ import sys
 import pygame as pg
 
 
-WIDTH, HEIGHT = 1600, 900
+WIDTH, HEIGHT = 1200, 650
 
 delta = {
     pg.K_UP: (0, -5),
@@ -12,16 +12,16 @@ delta = {
     pg.K_RIGHT: (+5, 0),
 }
 
-def check(rect: pg.rect):
+def check_w(rect: pg.rect):
     """
     kk_rect もしくはbomb_rectが画面内にいるか判定する
     引数:kk_rect ,bomb_rect
     戻り値:横方向と縦方向の判定結果タプル(True:画面内 False:画面外)
     """
     w ,h =True,True
-    if rect.left <0 or WIDTH<rect.right:
+    if (rect.left <0 or WIDTH<rect.right):
         w = False
-    if rect.top <0 or WIDTH<rect.bottom:
+    if (rect.top <0 or HEIGHT<rect.bottom):
         h = False
     return w,h
 
@@ -58,6 +58,8 @@ def main():
                 sum_mv[0] += mv[0]
                 sum_mv[1] += mv[1]
         kk_rct.move_ip(sum_mv)
+        if check_w(kk_rct) != (True,True):
+            kk_rct.move_ip(-sum_mv[0],-sum_mv[1])
     
         
         screen.blit(bg_img, [0, 0])
@@ -65,6 +67,11 @@ def main():
         screen.blit(kk_img, kk_rct)
         screen.blit(bomb,bomb_rct)
         bomb_rct.move_ip(vw,vh)#bombを移動させる move_ip(vw,vh)vwとvhはそれぞれの成分の移動速度
+        Wid, Hei = check_w(bomb_rct)
+        if not Wid:
+            vw *= -1
+        if not Hei:
+            vh *= -1
         pg.display.update()
         tmr += 1
         clock.tick(50)
