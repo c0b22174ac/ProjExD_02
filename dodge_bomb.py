@@ -5,6 +5,25 @@ import pygame as pg
 
 WIDTH, HEIGHT = 1600, 900
 
+delta = {
+    pg.K_UP: (0, -5),
+    pg.K_DOWN: (0, +5),
+    pg.K_LEFT: (-5, 0),
+    pg.K_RIGHT: (+5, 0),
+}
+
+def check(rect: pg.rect):
+    """
+    kk_rect もしくはbomb_rectが画面内にいるか判定する
+    引数:kk_rect ,bomb_rect
+    戻り値:横方向と縦方向の判定結果タプル(True:画面内 False:画面外)
+    """
+    w ,h =True,True
+    if rect.left <0 or WIDTH<rect.right:
+        w = False
+    if rect.top <0 or WIDTH<rect.bottom:
+        h = False
+    return w,h
 
 
 def main():
@@ -13,6 +32,9 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    # 練習２こうかとんSurface（kk_img）からこうかとんRect（kk_rct）を抽出する
+    kk_rct = kk_img.get_rect()
+    kk_rct.center = 900, 400
     bomb= pg.Surface((20,20))  #練習1
     pg.draw.circle(bomb,(255,30,0),(10,10),10)
     bomb.set_colorkey((0,0,0))
@@ -29,8 +51,18 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return        
+        key_lst = pg.key.get_pressed()
+        sum_mv = [0, 0]  # 合計移動量
+        for k, mv in delta.items():
+            if key_lst[k]: 
+                sum_mv[0] += mv[0]
+                sum_mv[1] += mv[1]
+        kk_rct.move_ip(sum_mv)
+    
+        
         screen.blit(bg_img, [0, 0])
-        screen.blit(kk_img, [900, 400])
+        #screen.blit(kk_img, [900, 400]) 下の行に変更
+        screen.blit(kk_img, kk_rct)
         screen.blit(bomb,bomb_rct)
         bomb_rct.move_ip(vw,vh)#bombを移動させる move_ip(vw,vh)vwとvhはそれぞれの成分の移動速度
         pg.display.update()
