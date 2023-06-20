@@ -48,6 +48,7 @@ def main():
     bomb_rct.center = w,h  #bombの中心位置を設定する
     vw = +5  #縦方向の移動速度
     vh = +5  #横方向の移動速度
+    accs = [a for a in range(1, 11)] #加速度listの追加
 
     clock = pg.time.Clock()
     tmr = 0
@@ -61,7 +62,7 @@ def main():
                 screen.blit(kk_img, kk_rct) 
                 pg.display.update()
                 print("ゲームオーバー")
-                time.sleep(3)  #画面を停止
+                time.sleep(2)  #画面を停止
                 return   # ゲームオーバー
 
         for event in pg.event.get():
@@ -83,7 +84,10 @@ def main():
         #screen.blit(kk_img, [900, 400]) 下の行に変更
         screen.blit(kk_img, kk_rct)
         screen.blit(bomb,bomb_rct)
-        bomb_rct.move_ip(vw,vh)#bombを移動させる move_ip(vw,vh)vwとvhはそれぞれの成分の移動速度
+        avw, avh= vw*accs[min(tmr//500, 9)], vh*accs[min(tmr//500, 9)]#加速度の追加
+        #print(avw, avh)  #加速確認
+        #print(tmr)  #タイマー確認
+        bomb_rct.move_ip(avw,avh)#bombを移動させる move_ip(vw,vh)vwとvhはそれぞれの成分の移動速度　
         Wid, Hei = check_w(bomb_rct)
         if not Wid:
             vw *= -1
