@@ -1,5 +1,5 @@
-import random
 import math
+import random
 import time
 import sys
 import pygame as pg
@@ -61,7 +61,7 @@ def main():
     accs = [a for a in range(1, 11)] #加速度listの追加
     
     fonto = pg.font.Font(None,80)
-    moji = fonto.render("HOGE!",True,(255,0,0))
+    moji = fonto.render("YOU_LOSE!",True,(50,200,50))
 
 
     clock = pg.time.Clock()
