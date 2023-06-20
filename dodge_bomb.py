@@ -1,6 +1,5 @@
-import math
-import random
 import time
+import random
 import sys
 import pygame as pg
 
