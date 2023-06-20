@@ -35,9 +35,17 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
-    # kk_go0 = pg.image.load("ex02/fig/7.png")
-    # kk_go1 = pg.image.load("ex02/fig/8.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img0 = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img1 = pg.transform.rotozoom(kk_img, 45, 2.0)
+    kk_img2 = pg.transform.rotozoom(kk_img, 90, 2.0)
+    kk_img3 = pg.transform.rotozoom(kk_img, 135, 2.0)
+    kk_img4 = pg.transform.rotozoom(kk_img, 180, 2.0)
+    kk_img5 = pg.transform.rotozoom(kk_img, 225, 2.0)
+    kk_img6 = pg.transform.rotozoom(kk_img, 270, 2.0)
+    kk_img7 = pg.transform.rotozoom(kk_img, 315, 2.0)
+
+
     # 練習２こうかとんSurface（kk_img）からこうかとんRect（kk_rct）を抽出する
     kk_rct = kk_img.get_rect()
     kk_rct.center = 900, 400
