@@ -14,6 +14,8 @@ delta = {
     pg.K_RIGHT: (+5, 0),
 }
 
+# roto = {"":,"":,"":,"":,"":,"":,}
+
 def check_w(rect: pg.rect):
     """
     kk_rect もしくはbomb_rectが画面内にいるか判定する
@@ -49,6 +51,10 @@ def main():
     vw = +5  #縦方向の移動速度
     vh = +5  #横方向の移動速度
     accs = [a for a in range(1, 11)] #加速度listの追加
+    
+    fonto = pg.font.Font(None,80)
+    moji = fonto.render("HOGE!",True,(255,0,0))
+
 
     clock = pg.time.Clock()
     tmr = 0
@@ -60,6 +66,7 @@ def main():
                 kk_img = pg.image.load(f"ex02/fig/{select_img}.png")
                 kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)  #画像のサイズ設定
                 screen.blit(kk_img, kk_rct) 
+                screen.blit(moji,[80,80])
                 pg.display.update()
                 print("ゲームオーバー")
                 time.sleep(2)  #画面を停止
