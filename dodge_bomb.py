@@ -1,4 +1,6 @@
 import random
+import math
+import time
 import sys
 import pygame as pg
 
@@ -31,6 +33,8 @@ def main():
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
+    # kk_go0 = pg.image.load("ex02/fig/7.png")
+    # kk_go1 = pg.image.load("ex02/fig/8.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
     # 練習２こうかとんSurface（kk_img）からこうかとんRect（kk_rct）を抽出する
     kk_rct = kk_img.get_rect()
@@ -48,13 +52,21 @@ def main():
     clock = pg.time.Clock()
     tmr = 0
     while True:
+
+        if kk_rct.colliderect(bomb_rct):  # 練習５
+                screen.blit(bg_img, [0, 0])  #背景画像の更新
+                select_img = random.randint(7,8)  #こうかとんの画像をランダムに選ぶ
+                kk_img = pg.image.load(f"ex02/fig/{select_img}.png")
+                kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)  #画像のサイズ設定
+                screen.blit(kk_img, kk_rct) 
+                pg.display.update()
+                print("ゲームオーバー")
+                time.sleep(3)  #画面を停止
+                return   # ゲームオーバー
+
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return 
-                   
-            if kk_rct.colliderect(bomb_rct):  # 練習５
-                print("ゲームオーバー")
-                return   # ゲームオーバー
             
         key_lst = pg.key.get_pressed()
         sum_mv = [0, 0]  # 合計移動量
